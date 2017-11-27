@@ -1,4 +1,8 @@
-##### Sub-Study (60-40) Complete ##### 
+### Study 1, Experiment 1 ###
+### Sub-Study (60-40) Complete ###
+### welton@sas.upenn.edu ###
+# last updated: 26 Nov 2017 #
+
 options(scipen = 666)
 
 #################
@@ -9,6 +13,9 @@ require(alpha)
 require(plyr)
 require(grid)
 require(ggplot2)
+library(plyr)
+library(grid)
+library(ggplot2)
 
 ###################
 ### Graph Theme ###
@@ -237,7 +244,7 @@ summary(aov(Misses ~ Accountability, data=only_acc_obs))
 # Residuals      108   7451   68.99 
 
 ###############
-#### Graph ####
+## Graphics ###
 ###############
 
 # Create vector for each condition combination
@@ -334,35 +341,36 @@ trials <- c(1:60)
 # Combine above vectors into dataframe 
 per_round_data <- data.frame(trials, perfect_game, env0_acc0, env0_acc1, env0_acc2, env1_acc0, env1_acc1, env1_acc2)
 
-# Graph 1
+# Study 1 Figure 5
 
 score_after_each_round <- ggplot(data=per_round_data) + 
   theme_bw() +
-  geom_line(aes(x=trials, y=env0_acc0, colour="1"), size = 1) + 
-  geom_line(aes(x=trials, y=env0_acc1, colour="2"), size = 1) + 
-  geom_line(aes(x=trials, y=env0_acc2, colour="3"), size = 1) + 
-  geom_line(aes(x=trials, y=env1_acc0, colour="4"), size = 1) + 
-  geom_line(aes(x=trials, y=env1_acc1, colour="5"), size = 1) + 
-  geom_line(aes(x=trials, y=env1_acc2, colour="6"), size = 1) + 
-  theme(plot.title = element_text(hjust = 0.5),  legend.position="bottom", legend.title=element_blank()) +
-  labs(x = "Trial", y = "Total Score", title= "Average Score Across Conditions", color = "Conditions") +
+  geom_line(aes(x=trials, y=env0_acc0, colour="1"), size = 2) + 
+  geom_line(aes(x=trials, y=env0_acc1, colour="2"), size = 2) + 
+  geom_line(aes(x=trials, y=env0_acc2, colour="3"), size = 2) + 
+  geom_line(aes(x=trials, y=env1_acc0, colour="4"), size = 2) + 
+  geom_line(aes(x=trials, y=env1_acc1, colour="5"), size = 2) + 
+  geom_line(aes(x=trials, y=env1_acc2, colour="6"), size = 2) + 
+  theme(text = element_text(size=20), plot.title = element_text(hjust = 0.5),  
+        legend.position="bottom", legend.title=element_blank()) +
+  labs(x = "Trial #", y = "Total Score", title= "Experiment 1a Scores Across Conditions", color = "Conditions") +
   scale_colour_manual(labels = c("Random Env & No Accountability", 
-                                 "Random Env & Outcome Accountable", 
-                                 "Random Env & Process Accountable", 
+                                 "Random Env & Outcome", 
+                                 "Random Env & Process", 
                                  "Non-random Env & No Accountability", 
-                                 "Non-random Env & Outcome Accountable",  
-                                 "Non-random Env & Process Accountable"), 
+                                 "Non-random Env & Outcome",  
+                                 "Non-random Env & Process"), 
                       values=c("blue", 
                                "green", 
                                "red", 
                                "darkblue", 
                                "darkgreen", 
                                "darkred")) +
-  guides(linetype = guide_legend(override.aes = list(size = 1))) 
+  guides(linetype = guide_legend(override.aes = list(size = 1.5))) 
  
 score_after_each_round
 
-# Graph 2
+# Graph 2 # Unused in Text
 score_after_each_round_only_random <- ggplot(data=per_round_data) + 
   theme_bw() +
   geom_line(aes(x=trials, y=env0_acc0, colour="1"), size = 1) + 
@@ -377,6 +385,7 @@ score_after_each_round_only_random <- ggplot(data=per_round_data) +
                                "darkgreen", 
                                "darkred")) +
   guides(linetype = guide_legend(override.aes = list(size = 5)))
+
 score_after_each_round_only_random
 
 #########################################################
@@ -694,13 +703,22 @@ alpha(aomt)
 
 
 ##################################################
+###          More Figures start here           ###
+##################################################
 
+# Study 1 / Figure 3
+
+graphics.off()
+x   <- seq(-90,120,length=10000)
+y   <- dnorm(x,mean=-15, sd=10.06)
+plot(x,y, type="l", lwd=1, ylab="Probability Density", xlab="Score", xlim=c(-70, 90), cex.lab=1.25)
+
+
+# Study 1 / Figure 5
 # Density plots
 
 process.only <- subset(data, Accountability==2)
-
 head(process.only)
-
 summary(lm(R60~aomt.avg, process.only))
 summary(lm(R60~Accountability * aomt.avg, data))
 
@@ -714,66 +732,79 @@ plot(density(data$R60))
 
 # set up ideal distribution of scores
 
-expected.value.random <- rnorm(100, -15, 10.06)
-optimal.bayesian.6040 <- rnorm(100, 78, 10)
-optimal.bayesian.4060 <- rnorm(100, 48, 10)
+expected.value.random <- rnorm(10000, -15, 10.06)
+optimal.bayesian.6040 <- rnorm(10000, 78, 10)
+optimal.bayesian.4060 <- rnorm(10000, 48, 10)
 
 # plot overall distributions
 
+# label distributions
 density.labels.6040 <- c("Control", "Non Random / No Acc", "Outcome Random", "Process Random", 
                          "Outcome Non Random", "Process Non Random")
 
+# reset grahical parameters
+graphics.off()
 par(mfrow=c(1,1))
-plot(density(control$R60), ylim=c(0,0.050), ylab="Probability Density", xlab="", col="black", main="",
-     xlim=c(-100, 100))
-title(main="Score Distribution by Condition", col.main="black")
-lines(density(non.random$R60), col="blue")
-lines(density(outcome.random$R60), col="red")
-lines(density(process.random$R60), col="green")
-lines(density(outcome.nonrandom$R60), col="yellow")
-lines(density(process.nonrandom$R60), col="purple")
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+
+# 
+plot(density(control$R60), ylim=c(0,0.050), ylab="Probability Density", xlab="Total Score", 
+     col="black", main="", lwd=2.5,
+     xlim=c(-90, 120))
+title(main="Score Distribution by Condition", col.main="black", lwd=2.5)
+lines(density(non.random$R60), col="blue", lwd=2.5)
+lines(density(outcome.random$R60), col="red", lwd=2.5)
+lines(density(process.random$R60), col="green", lwd=2.5)
+lines(density(outcome.nonrandom$R60), col="yellow", lwd=2.5)
+lines(density(process.nonrandom$R60), col="purple", lwd=2.5)
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
 legend("topleft",  c("Random / No Acc", "Non Random / No Acc", "Outcome Random", "Process Random", 
                       "Outcome Non Random", "Process Non Random", "Expected Random", "Optimal Bayesian"),
-       lty=1, col=c('black', 'blue', 'red', 'green', 'yellow', 'purple', 'orange', 'brown'), bty='n', cex=.75)
+       lty=1, col=c('black', 'blue', 'red', 'green', 'yellow', 'purple', 'orange', 'brown'), bty='n', cex=0.9)
 
 
+### Study 1, Figure 6
 ### Six panel plots
 
+# set graphical output parameters
+graphics.off()
 par(mfrow=c(2,3))
-plot(density(control$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="black", main="Control",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
 
-plot(density(non.random$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="blue", main="Non Random / No Acc",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+
+# each plot
+
+plot(density(control$R60), ylim=c(0,0.050), 
+     ylab="Probability Density", xlab="Total Score", col="black", main="Random No Acc", lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
 
 plot(density(outcome.random$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="red", main="Outcome Random",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+     ylab="Probability Density", xlab="Total Score", col="red", main="Random Outcome", lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
 
 plot(density(process.random$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="green", main="Process Random",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+     ylab="Probability Density", xlab="Total Score", col="green", main="Random Process", lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
+
+plot(density(non.random$R60), ylim=c(0,0.050), 
+     ylab="Probability Density", xlab="Total Score", col="blue", main="Non Random No Acc", lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
 
 plot(density(outcome.nonrandom$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="yellow", main="Outcome Non Random",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+     ylab="Probability Density", xlab="Total Score", col="yellow", main="Non Random Outcome",lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)
 
 plot(density(process.nonrandom$R60), ylim=c(0,0.050), 
-     ylab="Probability Density", xlab="", col="purple", main="Process Non Random",
-     xlim=c(-100, 100))
-lines(density(expected.value.random), col="orange")
-lines(density(optimal.bayesian.6040), col="brown")
+     ylab="Probability Density", xlab="Total Score", col="purple", main="Non Random Process", lwd=2.5,
+     xlim=c(-90, 120))
+lines(density(expected.value.random), col="orange", lwd=2.5)
+lines(density(optimal.bayesian.6040), col="brown", lwd=2.5)

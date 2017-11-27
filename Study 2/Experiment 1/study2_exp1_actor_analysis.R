@@ -1,5 +1,7 @@
-#### Study 2a: Policymakers
-#### updated 6/22/2017
+### Study 2, Experiment 1 ###
+### Policymakers ###
+### welton@sas.upenn.edu ###
+# last updated: 26 Nov 2017 #
 
 options(scipen=666)
 
@@ -262,18 +264,22 @@ interaction_model.high.inact <- interaction_model.high[which(interaction_model.h
 
 colors = c('darkblue', 'darkred', 'grey','black')
 
+# Study 2 Experiment 1 Figure 2
+
 plot <- ggplot(data = interaction_model, aes(x=outcome, y=mean)) + 
   theme_bw() +
-  geom_line(data=interaction_model.low.act, aes(group = probability, colour="Low probability"), size=1) +
-  geom_line(data=interaction_model.high.act, aes(group = probability, colour="High probability"), size=1) +
-  geom_line(data=interaction_model.low.inact, aes(group = probability, colour="Low probability"), size=1) +
-  geom_line(data=interaction_model.high.inact, aes(group = probability, colour="High probability"), size=1) +
-  geom_point(size=2)+ geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=.2) +
-  labs(x="Outcome") +
-  labs(y="Justification ") +
+  geom_line(data=interaction_model.low.act, aes(group = probability, colour="Low probability"), size=1.5) +
+  geom_line(data=interaction_model.high.act, aes(group = probability, colour="High probability"), size=1.5) +
+  geom_line(data=interaction_model.low.inact, aes(group = probability, colour="Low probability"), size=1.5) +
+  geom_line(data=interaction_model.high.inact, aes(group = probability, colour="High probability"), size=1.5) +
+  geom_point(size=1.5)+ geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=.08) +
+  labs(x="Action and Outcome") +
+  labs(y="Justification Level") +
   ggtitle("") +
-  theme(legend.text=element_text(size=8)) +
-  theme(plot.title = element_text(hjust = 0.5),  legend.position="bottom", legend.title=element_blank()) +
+  theme(legend.text=element_text(size=12)) +
+  theme(plot.title = element_text(hjust = 0.5),  legend.position="bottom", legend.title=element_blank(),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14)) +
   scale_x_discrete(breaks=c("Act:Neg","Act:Pos", "Inact:Neg", "Inact:Pos"), labels=c("Act & Negative", "Act & Positive", "Inact & Negative", "Inact & Positive"))
 plot <- plot + scale_color_manual(values=colors, name="Conditions")
 plot
@@ -288,23 +294,30 @@ outcome.low_high.interaction <- ddply(data,
                             
 outcome.low_high.interaction
 
+### Study 2 Experiment 1 Figure 1
 ### new interaction plots
+
 
 data$num_verb <- Actors$num_verb
 
-interaction.plot(data$low_high, data$num_verb, data$justification,
-                 xlab="Likelihood",
-                 ylab="Justification",
-                 trace.label="Prob Type Choice"
-                 )
-
+graphics.off()
 data$num_verb <- factor(data$num_verb,
                         levels=c(0,1),
                         labels=c("Num", "Verbal"))
 
 data$low_high <- factor(data$low_high,
-                          levels=c(0,1),
-                          labels=c("Low", "High"))
+                        levels=c(0,1),
+                        labels=c("Low", "High"))
+
+interaction.plot(data$low_high, data$num_verb, data$justification, lwd=2,
+                 xlab="Event Likelihood",
+                 ylab="Justification Level",
+                 trace.label="Prob Type Choice",
+                 legend = TRUE,
+                 leg.bty = "y",
+                 cex.lab=1.3,
+                 cex.axis=1.2)
+
 
 ### Misc
 

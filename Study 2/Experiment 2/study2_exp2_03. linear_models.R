@@ -150,8 +150,8 @@ plot <- ggplot(data = regression_6_summary, aes(x=low_high, y=mean)) +
 		  scale_x_discrete(breaks=c("0", "1"), labels=c("Low", "High"))
 
 plot <- plot + scale_color_manual(values=colors, name="Conditions")
-
 plot
+
 #-------------
 #combo regressions from reg 4
 

@@ -1,5 +1,7 @@
-#### Study 2b
-#### Last updated 6/22/2017
+### Study 2, Experiment 2 ###
+### Observers ###
+### welton@sas.upenn.edu ###
+# last updated: 26 Nov 2017 #
 
 options(scipen=999)
 
@@ -21,6 +23,7 @@ aov.1 <- aov(justification_1 ~ low_high + verb_num, data=data2)
 aov.1.int <- aov(justification_1 ~ low_high * verb_num, data=data2)
 summary(aov.1.int)
 
+### Study 2 Figure 3
 ### Plot interaction
 
 data2$verb_num <- factor(data2$verb_num,
@@ -32,9 +35,14 @@ data2$low_high <- factor(data2$low_high,
                         labels=c("Low", "High"))
 
 interaction.plot(data2$low_high, data2$verb_num, data2$justification_1,
-                 xlab="Likelihood", 
-                 ylab="Perceived Justification",
-                 trace.label="")
+                 xlab="Event Likelihood", 
+                 ylab="Justification Level",
+                 trace.label="Probability Type",
+                 lwd=2.5,
+                 cex.lab=1.3,
+                 cex.axis=1.3,
+                 legend="TRUE",
+                 leg.bty="y")
 
 
 # Call:

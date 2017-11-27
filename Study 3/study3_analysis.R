@@ -1,8 +1,9 @@
-#### Study 3 analysis
-####
+### Study 3 ###
+### Need for closure and policy preferences ###
+### welton@sas.upenn.edu ###
+# last updated: 26 Nov 2017 #
 
-data <- X_02_CLEAN_Accountability_Political_Ideology_Need_for_Closure_and_Policy_Preferences
-
+data <- Study3_Accountability_Political_Ideology_Need_for_Closure_and_Policy_Preferences
 head(data)
 
 ## clean data
@@ -169,3 +170,4 @@ summary(test.re2)
 
 test.rs2 <- aov(reduc_s ~ account + uncertainty_2 + pol.party + pol.party*uncertainty_2, data=newdata) #ns
 summary(test.rs2)
+

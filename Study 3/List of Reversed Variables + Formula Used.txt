@@ -1,0 +1,38 @@
+Variables Reversed:
+consc_2*	
+consc_4*
+agree_2*
+agree_4*
+extro_2*
+extro_4*
+open_2*
+open_3*
+open_4*
+neuro_2*
+neuro_4*
+cognition_3*
+cognition_4*
+cognition_5*
+cognition_7*
+cognition_8*
+cognition_9*
+cognition_12*
+cognition_16*
+cognition_17*
+aomt_4*
+aomt_5*
+aomt_6*
+aomt_7*
+
+Formula Used:
+=IF(CW3=1,7,IF(CW3=2,6,IF(CW3=3,5,IF(CW3=4,4,IF(CW3=5,3,IF(CW3=6,2,IF(CW3=7,1)))))))
+
+=IF(BX2="Staunch Liberal",1,IF(BX2="Very Liberal",1,IF(BX2="Liberal",3,IF(BX2="Slightly Liberal",4,IF(BX2="Moderate",5,IF(BX2="Slightly Conservative",6,IF(BX2="Conservative",7,IF(BX2="Very Conservative",8,IF(BX2="Staunch Conservative",9,"")))))))))
+
+=IF(BY2="Less than High School",1,IF(BY2="High School / GED",2,IF(BY2="Some College Courses",3,IF(BY2="2-year College Degree",4,IF(BY2="4-year College Degree",5,IF(BY2="Masters Degree",6,IF(BY2="Doctoral Degree",7,IF(BY2="Professional Degree (JD,MD)",1,""))))))))
+
+=IF(BZ2="18-24",1,IF(BZ2="25-29",2,IF(BZ2="30-34",3,IF(BZ2="35-39",4,IF(BZ2="40-44",5,IF(BZ2="45-49",6,IF(BZ2="50-54",7,IF(BZ2="55-59",8,""))))))))
+
+=IF(CA2="Male",1,IF(CA2="Female",2,""))
+
+=IF(CB2="White/Caucasian",1,IF(CB2="African American",2,IF(CB2="Hispanic",3,IF(CB2="Asian",4,IF(CB2="Native American",5,IF(CB2="Pacific Islander",6,IF(CB2="Other",7,"")))))))
