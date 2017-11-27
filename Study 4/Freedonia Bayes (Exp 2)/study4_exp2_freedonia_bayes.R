@@ -1,3 +1,8 @@
+### Study 4 ###
+### Freedonia Experiment 2 analysis###
+### welton@sas.upenn.edu ###
+# last updated: 26 Nov 2017 #
+
 library(ggplot2)
 library(plyr)
 library(psych)

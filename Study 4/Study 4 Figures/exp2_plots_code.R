@@ -1,5 +1,5 @@
 ### Study 4 ###
-### Freedonia Experiment 1###
+### Freedonia Experiment 2 plots code###
 ### welton@sas.upenn.edu ###
 # last updated: 26 Nov 2017 #
 
