@@ -113,8 +113,10 @@ plot <- ggplot(data=table2_graph, aes(x=evidence, y=change, group=clarity, colou
         legend.text=element_text(size=16), #increase legend label text
         legend.key.size=unit(5,"lines"), #increase size of legend label keys
         legend.key=element_rect(fill="white")) #remove background of legend label keys
+plot # Figure 1
 
-plot
+data$avgabspercent
+data <- na.omit(data)
 
 # Interactions
 data$avgabspercent <- as.numeric(data$avgabspercent)
@@ -151,4 +153,4 @@ plot2 <- ggplot(data = avg.abs.percent.all.conditions, aes(x=clarity, y=mean)) +
         legend.text=element_text(size=12), #increase legend label text
         legend.key.size=unit(5,"lines"), #increase size of legend label keys
         legend.key=element_rect(fill="white")) #remove background of legend label keys
-plot2
+plot2 # Figure 2
